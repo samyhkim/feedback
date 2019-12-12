@@ -23,7 +23,9 @@ passport.use(
     {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
-      callbackURL: "/auth/google/callback"
+      callbackURL: "/auth/google/callback",
+      // Avoids Google's redirect_uri_mismatch error in prod
+      proxy: true
     },
     (accessToken, refreshToken, profile, done) => {
       // Check for duplicates
