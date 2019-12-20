@@ -27,19 +27,16 @@ passport.use(
       // Avoids Google's redirect_uri_mismatch error in prod
       proxy: true
     },
-    (accessToken, refreshToken, profile, done) => {
+    async (accessToken, refreshToken, profile, done) => {
       // Check for duplicates
-      User.findOne({ googleID: profile.id }).then(existingUser => {
-        if (existingUser) {
-          // We already had a record with a given profile ID
-          done(null, existingUser);
-        } else {
-          // Creates a new model instance of a user
-          new User({ googleID: profile.id })
-            .save()
-            .then(user => done(null, user));
-        }
-      });
+      const existingUser = await User.findOne({ googleID: profile.id });
+      if (existingUser) {
+        // We already had a record with a given profile ID
+        return done(null, existingUser);
+      }
+      // Creates a new model instance of a user
+      const user = await new User({ googleID: profile.id }).save();
+      return done(null, user);
     }
   )
 );
