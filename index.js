@@ -8,6 +8,7 @@ const keys = require("./config/keys");
 const bodyParser = require("body-parser");
 // Our imported file does not return anything so we don't assign it to a var
 require("./models/User");
+require("./models/Survey");
 require("./services/passport");
 
 const app = express();
@@ -30,6 +31,7 @@ app.use(passport.session());
 // Requiring authRoutes and bllingRoutes returns a function, to which we pass Express app objects
 require("./routes/authRoutes")(app);
 require("./routes/billingRoutes")(app);
+require("./routes/surveyRoutes")(app);
 
 if (process.env.NODE_ENV === "production") {
   // Express will serve up production assets

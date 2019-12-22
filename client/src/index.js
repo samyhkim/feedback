@@ -8,6 +8,10 @@ import reduxThunk from "redux-thunk";
 import App from "./components/App";
 import reducers from "./reducers";
 
+// Development only axios helpers
+import axios from "axios";
+window.axios = axios;
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // Second argument is most relevant for setting up initial state with SSR
 const store = createStore(
